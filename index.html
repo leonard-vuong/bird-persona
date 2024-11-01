@@ -2,69 +2,92 @@
 <html lang="en">
 <head>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PZ4LYKWVC9"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-PZ4LYKWVC9');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZ4LYKWVC9"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PZ4LYKWVC9');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bird Persona/Bird Date Quiz</title>
+    <title>Bird Date Quiz / Bird Persona Quiz</title>
     <link rel="stylesheet" href="birdpersona.css">
 </head>
 <body>
-    <div class="quiz-container">
+    <!-- Intro Page Container -->
+    <div class="quiz-container" id="intro-container">
         <h1>What Bird Are U?</h1>
-
-        <!-- Language selection before the quiz starts -->
+        <img src="logo.png" alt="Logo" class="intro-logo" style="width: 100px; height: auto; margin: 20px auto;">
         <div id="language-selection">
-            <p>Do you prefer to take the journey in English or Vietnamese? - Bạn muốn bắt đầu hành trình bằng tiếng Việt hay tiếng Anh?</p>
+            <p>Do you prefer to take the journey in English or Vietnamese? <br> Bạn muốn bắt đầu hành trình bằng tiếng Việt hay tiếng Anh?</br></p>
             <button class="language-button choices" data-language="english">English</button>
             <button class="language-button choices" data-language="vietnamese">Vietnamese</button>
             <button id="next-button" style="display:none;">Next / Tiếp</button>
         </div>
-
-        <!-- Question container with counter -->
-        <div id="question-container" style="display:none;">
-            <div class="question-box">
-                <div class="qNum">
-                    <div class="qNum-pages">
-                        <div id="q-current" class="qpn">Q1</div>
-                        <div class="qpbar"></div>
-                        <div class="qpn q-total">/14</div>
-                    </div>
-                </div>
-                <div id="question" class="question ps-txt">Question will appear here.</div>
-            </div>
-            <img id="question-image" src="q1_illustration.jpg" alt="Question image" style="margin: 50px auto;">
-            <div id="choices"></div>
-            <button id="done-button" style="display: none;">Done</button>
-        </div>
-
-        <!-- Name entry field for test taker after the quiz -->
-        <div id="name-entry" style="display: none;">
-            <p>Enter your name:</p>
-            <input type="text" id="test-taker-name" placeholder="Your name" required>
-            <button id="submit-name">Submit</button>
-        </div>
     </div>
 
-    <!-- Result container where the result will be shown -->
-    <div id="result-container" style="display: none;">
+    <!-- Question Container -->
+    <div class="quiz-container" id="question-container" style="display:none;">
+        <div class="question-box">
+            <div class="qNum">
+                <div class="qNum-pages">
+                    <div id="q-current" class="qpn">Q1</div>
+                    <div class="qpbar"></div>
+                    <div class="qpn q-total">/14</div>
+                </div>
+            </div>
+            <div id="question" class="question ps-txt">Question will appear here.</div>
+        </div>
+        <img id="question-image" src="q1_illustration.jpg" alt="Question image" style="margin: 20px auto;">
+        <div id="choices"></div>
+        <button id="done-button" style="display: none;">Done</button>
+    </div>
+
+    <!-- Enter Name Page -->
+    <div class="quiz-container" id="name-entry" style="display: none;">
+        <p>Enter your name:</p>
+        <input type="text" id="test-taker-name" placeholder="Your name" required>
+        <button id="submit-name">Submit</button>
+    </div>
+
+    <!-- Result Page Container -->
+    <div class="quiz-container" id="result-container" style="display: none; text-align: center;">
         <h2>Your Results</h2>
-        <div id="result">
+        
+        <!-- Labels Above Photos -->
+        <div style="display: flex; justify-content: space-around; margin-bottom: 10px;">
+            <h3>#BirdPersona</h3>
+            <h3>#BirdDate</h3>
+        </div>
+
+        <!-- Bird Persona and Bird Match Photos Side-by-Side with Download Buttons -->
+        <div id="result" style="display: flex; justify-content: center; gap: 20px; margin-bottom: 30px;">
             <div class="result-image-container">
-                <img id="bird-persona" alt="Bird Persona">
-                <a id="persona-download" download style="display:block;">Download Persona</a>
+                <canvas id="persona-canvas" width="1000" height="1500"></canvas>
+                <a id="persona-download" download="bird-persona.png" style="display:block; margin-top: 10px;">Download Persona</a>
             </div>
             <div class="result-image-container">
-                <img id="bird-match" alt="Bird Match">
-                <a id="match-download" download style="display:block;">Download Match</a>
+                <canvas id="match-canvas" width="1000" height="1500"></canvas>
+                <a id="match-download" download="bird-match.png" style="display:block; margin-top: 10px;">Download Match</a>
             </div>
         </div>
+
+        <!-- Credits and Contact Information -->
+        <p>Created by Leonard for @langxichim</p>
+        <p>Socials: 
+            <a href="https://www.facebook.com/langxichim" target="_blank">Facebook</a>
+            <a href="https://www.instagram.com/langxichim" target="_blank">Instagram</a>
+            <a href="https://www.tiktok.com/@langxichim" target="_blank">TikTok</a>
+        </p>
+        <p>Contacts: chirpy@langxichim.com | leonardvuong.work@gmail.com</p>
+
+        <!-- Explore Button -->
+        <button onclick="window.location.href='https://langxichim.com';" style="margin: 20px 0; padding: 12px 30px; font-size: 18px; background-color: var(--primary); color: var(--text); border: none; border-radius: 5px; cursor: pointer;">
+            Explore
+        </button>
+
+        <p style="font-size: 0.9rem;">Ⓒ 2024 Làng Xì Chim</p>
     </div>
 
     <script src="birdpersona.js"></script>
