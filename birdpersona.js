@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { question: "Mặt trời bắt đầu lặn, bạn nhìn lại hành trình vừa qua và nghĩ...", choices: ["Nghĩ cách để lần sau làm tốt hơn nữa", "Tự hào về tất cả những gì mình đã đạt được"], weights: [{ weaverScore: 1 }, { flycatcherScore: 1 }] },
     ];
 
-   function displayCurrentQuestion() {
+    function displayCurrentQuestion() {
         const questions = selectedLanguage === 'english' ? englishQuestions : vietnameseQuestions;
         const currentQuestion = questions[currentQuestionIndex];
         const questionElement = document.getElementById('question');
@@ -101,15 +101,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const testName = document.getElementById('test-taker-name').value.trim();
         if (testName) {
             displayResult(testName);
+            trackQuizCompletion(testName);  // Track quiz completion
         } else {
             alert("Please enter your name to proceed.");
         }
     });
 
     function displayResult(testTakerName) {
-        const sortedPersonalities = Object.keys(scores).sort((a, b) => scores[b] - scores[a]);
-        const topPersonality = sortedPersonalities[0];  // Personality with the highest score
-        const secondTopPersonality = sortedPersonalities[1];
+        // Sort personalities by score
+        const sortedPersonalities = Object.entries(scores).sort(([,a], [,b]) => b - a);
+        const topPersonality = sortedPersonalities[0][0];  // Personality with the highest score
+        const secondTopPersonality = sortedPersonalities[1][0]; // Personality with the second-highest score
 
         const personalityMatches = {
             weaver: ["parakeet", "owl"],
@@ -150,14 +152,25 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.font = '30px Arial';
             ctx.fillStyle = 'black';
 
+            // Position text overlay in the bottom-right
             const xPosition = canvas.width - 50;
             const yPosition = 355;
             ctx.textAlign = 'right';
             ctx.fillText(overlayText, xPosition, yPosition);
 
+            // Set the download link with the canvas data URL after drawing
             const downloadLink = document.getElementById(`${canvasId}-download`);
             downloadLink.href = canvas.toDataURL('image/png');
         };
+    }
+
+    function trackQuizCompletion(name) {
+        gtag('event', 'quiz_completion', {
+            event_category: 'Quiz',
+            event_label: 'Bird Persona Quiz Completion',
+            value: 1,
+            user_name: name
+        });
     }
 
     document.querySelectorAll('.language-button').forEach(button => {
