@@ -153,7 +153,7 @@ const vietnameseQuestions = [
             ctx.fillStyle = 'black';
 
             // Position text overlay in the bottom-right
-            const xPosition = canvas.width - 55;
+            const xPosition = canvas.width - 65;
             const yPosition = 355;
             ctx.textAlign = 'right';
             ctx.fillText(overlayText, xPosition, yPosition);
