@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     let currentQuestionIndex = 0;
     let selectedLanguage = null;
+    let selectedChoiceIndex = null; // Track selected choice
     let scores = {
         weaver: 0,
         pelican: 0,
@@ -48,7 +49,9 @@ const vietnameseQuestions = [
         { question: "Mặt trời bắt đầu lặn, bạn nhìn lại hành trình vừa qua và nghĩ...", choices: ["Nghĩ cách để lần sau làm tốt hơn nữa", "Tự hào về tất cả những gì mình đã đạt được"], weights: [{ weaver: 1 }, { flycatcher: 1 }] },
     ];
 
+
     function displayCurrentQuestion() {
+        selectedChoiceIndex = null; // Reset selection for each question
         const questions = selectedLanguage === 'english' ? englishQuestions : vietnameseQuestions;
         const currentQuestion = questions[currentQuestionIndex];
         const questionElement = document.getElementById('question');
@@ -74,7 +77,8 @@ const vietnameseQuestions = [
     function handleChoiceClick(choiceIndex, button, weight) {
         document.querySelectorAll('.choices').forEach(btn => btn.classList.remove('selected'));
         button.classList.add('selected');
-        
+        selectedChoiceIndex = choiceIndex; // Set selected choice index
+
         // Increment the score for the selected personality
         for (const personality in weight) {
             scores[personality] += weight[personality];
@@ -82,6 +86,13 @@ const vietnameseQuestions = [
     }
 
     document.getElementById('done-button').addEventListener('click', () => {
+        // Check if a choice has been selected
+        if (selectedChoiceIndex === null) {
+            alert("Please select an option before proceeding to the next question. Chọn 1 đáp án để tiếp tục.");
+            return;
+        }
+
+        // Proceed to the next question if a choice is selected
         const questions = selectedLanguage === 'english' ? englishQuestions : vietnameseQuestions;
         currentQuestionIndex++;
 
@@ -154,7 +165,7 @@ function overlayTextOnCanvas(canvasId, imagePath, overlayText, downloadId) {
 
 
             // Position text overlay 
-            const xPosition = canvas.width - 65;
+            const xPosition = canvas.width - 60;
             const yPosition = 360;
             ctx.textAlign = 'right';
             ctx.fillText(overlayText, xPosition, yPosition);
