@@ -133,8 +133,8 @@ const vietnameseQuestions = [
         const personaImagePath = `${selectedLanguage === 'english' ? 'eng' : 'vie'}-persona-${topResult}.png`;
         const matchImagePath = `${selectedLanguage === 'english' ? 'eng' : 'vie'}-match-${birdMatch}.png`;
 
-        overlayTextOnCanvas('persona-canvas', personaImagePath, `name: ${testTakerName}`);
-        overlayTextOnCanvas('match-canvas', matchImagePath, `${testTakerName}'s match`);
+        overlayTextOnCanvas('persona-canvas', personaImagePath, `name: ${testTakerName}`, 'persona-download');
+        overlayTextOnCanvas('match-canvas', matchImagePath, `${testTakerName}'s match`, 'match-download');
 
         document.getElementById('question-container').style.display = 'none';
         document.getElementById('name-entry').style.display = 'none';
@@ -153,14 +153,15 @@ const vietnameseQuestions = [
             ctx.fillStyle = 'black';
 
             // Position text overlay in the bottom-right
-            const xPosition = canvas.width - 50;
+            const xPosition = canvas.width - 55;
             const yPosition = 355;
             ctx.textAlign = 'right';
             ctx.fillText(overlayText, xPosition, yPosition);
 
             // Set the download link with the canvas data URL after drawing
-            const downloadLink = document.getElementById(`${canvasId}-download`);
+            const downloadLink = document.getElementById(downloadId);
             downloadLink.href = canvas.toDataURL('image/png');
+            downloadLink.download = `${canvasId}.png`; // Set filename
         };
     }
 
