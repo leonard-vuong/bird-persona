@@ -133,35 +133,36 @@ const vietnameseQuestions = [
         const personaImagePath = `${selectedLanguage === 'english' ? 'eng' : 'vie'}-persona-${topResult}.png`;
         const matchImagePath = `${selectedLanguage === 'english' ? 'eng' : 'vie'}-match-${birdMatch}.png`;
 
-        overlayTextOnCanvas('persona-canvas', personaImagePath, `name: ${testTakerName}`, 'persona-download');
-        overlayTextOnCanvas('match-canvas', matchImagePath, `${testTakerName}'s match`, 'match-download');
+overlayTextOnCanvas('persona-canvas', personaImagePath, `${testTakerName}'s persona`, 'persona-download');
+overlayTextOnCanvas('match-canvas', matchImagePath, `${testTakerName}'s date`, 'match-download');
 
         document.getElementById('question-container').style.display = 'none';
         document.getElementById('name-entry').style.display = 'none';
         document.getElementById('result-container').style.display = 'block';
     }
 
-    function overlayTextOnCanvas(canvasId, imagePath, overlayText) {
-        const canvas = document.getElementById(canvasId);
-        const ctx = canvas.getContext('2d');
-        const image = new Image();
+function overlayTextOnCanvas(canvasId, imagePath, overlayText, downloadId) {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext('2d');
+    const image = new Image();
 
-        image.src = imagePath;
-        image.onload = function () {
-            ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-            ctx.font = '30px Arial';
-            ctx.fillStyle = 'black';
+    image.src = imagePath;
+    image.onload = function () {
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        ctx.font = '30px Arial';
+        ctx.fillStyle = 'black';
 
-            // Position text overlay in the bottom-right
+
+            // Position text overlay 
             const xPosition = canvas.width - 65;
-            const yPosition = 355;
+            const yPosition = 360;
             ctx.textAlign = 'right';
             ctx.fillText(overlayText, xPosition, yPosition);
 
-            // Set the download link with the canvas data URL after drawing
-            const downloadLink = document.getElementById(downloadId);
-            downloadLink.href = canvas.toDataURL('image/png');
-            downloadLink.download = `${canvasId}.png`; // Set filename
+        // Set the download link with the canvas data URL after drawing
+        const downloadLink = document.getElementById(downloadId);
+        downloadLink.href = canvas.toDataURL('image/png');
+        downloadLink.download = `${canvasId}.png`; // Set filename
         };
     }
 
