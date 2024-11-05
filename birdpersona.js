@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { question: "Mặt trời bắt đầu lặn, bạn nhìn lại hành trình vừa qua và nghĩ...", choices: ["Nghĩ cách để lần sau làm tốt hơn nữa", "Tự hào về tất cả những gì mình đã đạt được"], weights: [{ weaverScore: 1 }, { flycatcherScore: 1 }] },
     ];
 
-    function displayCurrentQuestion() {
+   function displayCurrentQuestion() {
         const questions = selectedLanguage === 'english' ? englishQuestions : vietnameseQuestions;
         const currentQuestion = questions[currentQuestionIndex];
         const questionElement = document.getElementById('question');
@@ -64,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const button = document.createElement('button');
             button.textContent = choice;
             button.classList.add('choices');
-            if (index === 0) button.classList.add('selected');
             button.addEventListener('click', () => handleChoiceClick(index, button, currentQuestion.weights[index]));
             choicesContainer.appendChild(button);
         });
@@ -109,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function displayResult(testTakerName) {
         const sortedPersonalities = Object.keys(scores).sort((a, b) => scores[b] - scores[a]);
-        const topPersonality = sortedPersonalities[0];
+        const topPersonality = sortedPersonalities[0];  // Personality with the highest score
         const secondTopPersonality = sortedPersonalities[1];
 
         const personalityMatches = {
@@ -132,15 +131,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const personaImagePath = `${selectedLanguage === 'english' ? 'eng' : 'vie'}-persona-${topResult}.png`;
         const matchImagePath = `${selectedLanguage === 'english' ? 'eng' : 'vie'}-match-${birdMatch}.png`;
 
-        overlayTextOnCanvas('persona-canvas', personaImagePath, `name: ${testTakerName}`, 'persona-download');
-        overlayTextOnCanvas('match-canvas', matchImagePath, `${testTakerName}'s match`, 'match-download');
+        overlayTextOnCanvas('persona-canvas', personaImagePath, `name: ${testTakerName}`);
+        overlayTextOnCanvas('match-canvas', matchImagePath, `${testTakerName}'s match`);
 
         document.getElementById('question-container').style.display = 'none';
         document.getElementById('name-entry').style.display = 'none';
         document.getElementById('result-container').style.display = 'block';
     }
 
-    function overlayTextOnCanvas(canvasId, imagePath, overlayText, downloadId) {
+    function overlayTextOnCanvas(canvasId, imagePath, overlayText) {
         const canvas = document.getElementById(canvasId);
         const ctx = canvas.getContext('2d');
         const image = new Image();
@@ -148,19 +147,16 @@ document.addEventListener('DOMContentLoaded', () => {
         image.src = imagePath;
         image.onload = function () {
             ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-            ctx.font = '30px Manrope';
+            ctx.font = '30px Arial';
             ctx.fillStyle = 'black';
 
-            // Position text overlay in the bottom-right
             const xPosition = canvas.width - 50;
             const yPosition = 355;
             ctx.textAlign = 'right';
             ctx.fillText(overlayText, xPosition, yPosition);
 
-            // Set the download link with the canvas data URL after drawing
-            const downloadLink = document.getElementById(downloadId);
+            const downloadLink = document.getElementById(`${canvasId}-download`);
             downloadLink.href = canvas.toDataURL('image/png');
-            downloadLink.download = `${canvasId}.png`; // Set filename
         };
     }
 
